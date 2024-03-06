@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: max-gateway
+  cloud:
+    discovery:
+      locator:
+        enabled: true
+    gateway:
+      routes:
+
+        - id: auth
+          uri: lb://max-auth
+          predicates:
+            - Path=/auth/**
+
+        # - id: product
+        #   uri: lb://store-product
+        #   predicates:
+        #     - Path=/product/**
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost"
+            allowedHeaders: "*"
+            allowedMethods:
+            - GET
+            - POST
+
+api:
+  endpoints:
+    open: >
+      POST /auth/register/,
+      POST /auth/login/
