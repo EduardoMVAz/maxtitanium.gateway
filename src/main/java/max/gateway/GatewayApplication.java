@@ -9,7 +9,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 public class GatewayApplication {
 
-    public static void main(String args) {
+    public static void main(String[] args) {
         SpringApplication.run(GatewayApplication.class, args);
     }
     
