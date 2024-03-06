@@ -7,16 +7,10 @@ spring:
         enabled: true
     gateway:
       routes:
-
-        - id: auth
+        - id: max-auth
           uri: lb://max-auth
           predicates:
             - Path=/auth/**
-
-        # - id: product
-        #   uri: lb://store-product
-        #   predicates:
-        #     - Path=/product/**
 
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
