@@ -12,16 +12,11 @@ spring:
           predicates:
             - Path=/auth/**
 
-      default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins: "http://localhost"
-            allowedHeaders: "*"
-            allowedMethods:
-            - GET
-            - POST
+      routes:
+        - id: max-accounts
+          uri: lb://max-accounts
+          predicates:
+            - Path=/accounts/**
 
 management:
   endpoints:
