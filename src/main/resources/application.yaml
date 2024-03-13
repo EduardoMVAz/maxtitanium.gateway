@@ -23,8 +23,24 @@ spring:
             - GET
             - POST
 
+management:
+  endpoints:
+    web:
+      base-path: /gateway/actuator
+      exposure:
+        include: ['*']
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone:${EUREKA_URI:http://localhost:8761/eureka/}
+
 api:
   endpoints:
     open: >
       POST /auth/register/,
-      POST /auth/login/
+      POST /auth/login/,
+      ANY /auth/actuator/**,
+      ANY /accounts/actuator/,
