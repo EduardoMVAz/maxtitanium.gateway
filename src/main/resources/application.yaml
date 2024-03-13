@@ -12,7 +12,6 @@ spring:
           predicates:
             - Path=/auth/**
 
-      routes:
         - id: max-accounts
           uri: lb://max-accounts
           predicates:
