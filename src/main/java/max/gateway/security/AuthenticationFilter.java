@@ -57,7 +57,6 @@ public class AuthenticationFilter implements GlobalFilter {
             .flatMap(response -> {
                 if (response != null && response.getStatusCode().is2xxSuccessful() && response.getBody() != null){
                     updateRequestWithUser(exchange, response.getBody());
-                    exchange.getRequest().mutate().header("user", response.getBody().toString());
                     return chain.filter(exchange);
                 } else {
                     throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token");
