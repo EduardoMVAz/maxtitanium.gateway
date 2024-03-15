@@ -12,8 +12,8 @@ spring:
           predicates:
             - Path=/auth/**
 
-        - id: max-accounts
-          uri: lb://max-accounts
+        - id: max-account
+          uri: lb://max-account
           predicates:
             - Path=/accounts/**
 
@@ -22,7 +22,7 @@ management:
     web:
       base-path: /gateway/actuator
       exposure:
-        include: ['*']
+        include: ['*', 'prometheus']
 
 eureka:
   client:
@@ -37,4 +37,5 @@ api:
       POST /auth/register/,
       POST /auth/login/,
       ANY /auth/actuator/**,
-      ANY /accounts/actuator/,
+      ANY /accounts/actuator,
+      ANY /accounts/actuator/**

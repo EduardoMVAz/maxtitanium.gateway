@@ -17,11 +17,13 @@ public class RouterValidator {
         request -> openApiEndpoints
             .stream()
             .noneMatch(uri -> {
-                String[] parts = uri.replaceAll("[^a-zA-Z0-9// ]", "").split(" ");
+                String[] parts = uri.replaceAll("[^a-zA-Z0-9// *]", "").split(" ");
+                if (parts.length != 2) return false;
                 final String method = parts[0];
                 final String path = parts[1];
+                final boolean deep = path.endsWith("/**");
                 
                 return (request.getMethod().toString().equalsIgnoreCase(method) || method.equalsIgnoreCase("ANY")) 
-                    && request.getURI().getPath().equals(path);
+                    && (request.getURI().getPath().equals(path)) || (deep && request.getURI().getPath().startsWith(path.replace("/**", "")));
             });
 }
