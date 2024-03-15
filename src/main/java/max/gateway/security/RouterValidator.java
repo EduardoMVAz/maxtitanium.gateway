@@ -3,18 +3,15 @@ package max.gateway.security;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RouterValidator {
     
-    //@Value("${api.endpoints.open}")
-    private List<String> openApiEndpoints = List.of(
-        "POST /auth/register",
-        "POST /auth/login",
-        "ANY /auth/register"
-    );
+    @Value("${api.endpoints.open}")
+    private List<String> openApiEndpoints;
 
     public final Predicate<ServerHttpRequest> isSecured = 
         request -> openApiEndpoints
