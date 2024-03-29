@@ -34,8 +34,9 @@ eureka:
 api:
   endpoints:
     open: >
-      POST /auth/register/,
-      POST /auth/login/,
+      POST /auth/register,
+      POST /auth/login,
+      ANY /auth/actuator,
       ANY /auth/actuator/**,
       ANY /accounts/actuator,
       ANY /accounts/actuator/**
