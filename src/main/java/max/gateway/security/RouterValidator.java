@@ -26,4 +26,7 @@ public class RouterValidator {
                 return (request.getMethod().toString().equalsIgnoreCase(method) || method.equalsIgnoreCase("ANY")) 
                     && (request.getURI().getPath().equals(path)) || (deep && request.getURI().getPath().startsWith(path.replace("/**", "")));
             });
+    
+    public final Predicate<ServerHttpRequest> isOpenApi =
+        request -> request.getURI().getPath().contains("swagger-ui") || request.getURI().getPath().contains("api-docs");
 }

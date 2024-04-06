@@ -29,6 +29,11 @@ public class AuthenticationFilter implements GlobalFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         final ServerHttpRequest request = exchange.getRequest();
 
+        // verificar se a rota eh swagger-ui ou api-docs
+        if (routerValidator.isOpenApi.test(request)) {
+            return chain.filter(exchange);
+        }
+
         // verificar se a rota eh segura
         if (!routerValidator.isSecured.test(request)) {
             return chain.filter(exchange);

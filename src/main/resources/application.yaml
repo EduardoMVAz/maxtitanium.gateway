@@ -41,23 +41,16 @@ api:
     open: >
       POST /auth/register,
       POST /auth/login,
-
       ANY /auth/actuator,
       ANY /auth/actuator/**,
       ANY /accounts/actuator,
       ANY /accounts/actuator/**,
       ANY /products/actuator,
-      ANY /products/actuator/**,
+      ANY /products/actuator/**
 
-      ANY /accounts/swagger-ui,
-      ANY /accounts/swagger-ui/**,
-      ANY /accounts/v3/api-docs,
-      ANY /products/swagger-ui,
-      ANY /products/swagger-ui/**,
-      ANY /products/v3/api-docs,
-      ANY /auth/swagger-ui,
-      ANY /auth/swagger-ui/**,
-      ANY /auth/v3/api-docs,
-      ANY /gateway/swagger-ui,
-      ANY /gateway/swagger-ui/**,
-      ANY /gateway/v3/api-docs
+springdoc:
+  swagger-ui:
+    enabled: true
+    url: /v3/api-docs
+  api-docs:
+    enabled: true
