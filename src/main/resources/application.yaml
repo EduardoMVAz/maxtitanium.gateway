@@ -21,6 +21,11 @@ spring:
           uri: lb://max-product
           predicates:
             - Path=/products/**
+        
+        - id: max-order
+          uri: lb://max-order
+          predicates:
+            - Path=/orders/**
 
 management:
   endpoints:
@@ -46,7 +51,9 @@ api:
       ANY /accounts/actuator,
       ANY /accounts/actuator/**,
       ANY /products/actuator,
-      ANY /products/actuator/**
+      ANY /products/actuator/**,
+      ANY /orders/actuator,
+      ANY /orders/actuator/**
 
 springdoc:
   swagger-ui:
