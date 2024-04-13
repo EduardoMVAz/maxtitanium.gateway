@@ -10,7 +10,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    account = docker.build("joaolucasmbc/gateway:${env.BUILD_ID}", "-f Dockerfile .")
+                    account = docker.build("pejassinaturasdocker/gateway:${env.BUILD_ID}", "-f Dockerfile .")
                 }
             }
         }
