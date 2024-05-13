@@ -1,6 +1,12 @@
 pipeline {
     agent any
     stages {
+        stage('Build Interface') {
+            steps {
+                build job: 'Auth', wait: true
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'mvn clean package'
