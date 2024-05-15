@@ -13,6 +13,32 @@ pipeline {
             }
         }
 
+        stage('Post Security Scan') {
+            steps {
+                script {
+                    // Retrieve the Git URL
+                    def gitUrl = sh(script: 'git config --get remote.origin.url', returnStdout: true).trim()
+
+                    // Hardcoded id_service
+                    def idService = '87d7fa28-549a-4b45-8960-990855580827'
+
+                    // Create the JSON payload using string manipulation
+                    def newPayload = """
+                    {
+                        "repo_url": "${gitUrl}",
+                        "id_service": "${idService}"
+                    }
+                    """
+
+                    // echoes the payload to the console
+                    echo newPayload
+
+                    // Post the new JSON payload to the API
+                    sh "curl -X POST -H 'Content-Type: application/json' -d '${newPayload}' https://scan-api-44s6izf3qa-uc.a.run.app/scan"
+                }
+            }
+        }
+
         stage('Build Image') {
             steps {
                 script {
