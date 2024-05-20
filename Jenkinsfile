@@ -42,7 +42,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    account = docker.build("pejassinaturasdocker/gateway:${env.BUILD_ID}", "-f Dockerfile .")
+                    account = docker.build("pejassinaturasdocker/gateway:${env.BUILD_ID}", "-- ", "-f Dockerfile .")
                 }
             }
         }
@@ -56,11 +56,14 @@ pipeline {
                 }
             }
         }
-        stage('Deploy on k8s') {
+        stage('Deploy on k8s LOCAL') {
+            when {
+                environment name: 'TARGET', value: 'local'
+            }
             steps {
                 witheCredentials([ string(credentialsId: 'minikube-credential', variable: 'api_token') ]) {
-                    sh 'kubectl --token $api_token --server https://host.docker.internal:39517 --insecure-skip-tls-verify=true apply -f ./k8s/deployment.yaml '
-                    sh 'kubectl --token $api_token --server https://host.docker.internal:39517 --insecure-skip-tls-verify=true apply -f ./k8s/service.yaml '
+                    sh 'kubectl --token $api_token --server https://host.docker.internal:${env.K8S_PORT} --insecure-skip-tls-verify=true apply -f ./k8s/deployment.yaml '
+                    sh 'kubectl --token $api_token --server https://host.docker.internal:${env.K8S_PORT} --insecure-skip-tls-verify=true apply -f ./k8s/service.yaml '
                 }
             }
         }
