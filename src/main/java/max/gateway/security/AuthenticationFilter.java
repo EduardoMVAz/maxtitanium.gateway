@@ -4,6 +4,7 @@ import org.apache.hc.core5.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -28,6 +29,11 @@ public class AuthenticationFilter implements GlobalFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         final ServerHttpRequest request = exchange.getRequest();
+
+        // Allow preflight requests to pass through
+        if (request.getMethod() == HttpMethod.OPTIONS) {
+            return chain.filter(exchange);
+        }
 
         // verificar se a rota eh swagger-ui ou api-docs
         if (routerValidator.isOpenApi.test(request)) {
